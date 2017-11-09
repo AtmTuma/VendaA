@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             xmlns:p="http://primefaces.org/ui"
+             template="template.xhtml"
+             xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:form>
+        <p:fieldset>
+            <p:panelGrid columns="2" rendered="#{vendaBean.isBuscar() == false}">
+                <h:outputLabel for="calini" value="Data inicial"/>
+                <p:calendar locale="pt" id="calini" value="#{vendaBean.entidade.dt_inicial}" showOn="button" pattern="dd/MM/yyyy"><f:convertDateTime pattern="dd/MM/yyyy" /></p:calendar>
+                <h:outputLabel for="calfim" value="Data final"/>
+                <p:calendar locale="pt" id="calfim" value="#{vendaBean.entidade.dt_final}" showOn="button" pattern="dd/MM/yyyy"><f:convertDateTime pattern="dd/MM/yyyy" /></p:calendar>
+                <h:outputLabel value="Valor"/>
+                <p:inputText value="#{vendaBean.entidade.vl_total}"/>
+                <h:outputLabel value="Descrição"/>
+                <p:inputText value="#{vendaBean.entidade.observacao}"/>
+            </p:panelGrid>
+        </p:fieldset>
+        <p:toolbar>
+            <p:toolbarGroup align="right">
+                <p:commandButton value="Novo" action="#{vendaBean.novo()}" update="@form"/>
+                <p:commandButton value = "Salvar" action="#{vendaBean.salvar()}" disabled="#{vendaBean.isBuscar() == true}" update="@form"/>
+                <p:commandButton value = "Buscar" action="#{vendaBean.buscar()}" update="@form"/>
+            </p:toolbarGroup>
+        </p:toolbar>
+        <p:messages autoUpdate="true" showDetail="true"/>
+        <p:fieldset>
+            <p:dataTable value="#{vendaBean.entidades}" var="venda" rendered="#{vendaBean.isBuscar() == true}">
+                <p:column>
+                    <p:commandButton value="Editar" action="#{vendaBean.editar(venda)}"  update="@form"/>
+                    <p:commandButton value="Deletar" action="#{vendaBean.deletar(venda)}" update="@form"/>
+                </p:column>
+                <p:column headerText="Data inicial" sortBy="#{venda.dt_inicial}">
+                    <h:outputText value="#{venda.dt_inicial}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+                </p:column>
+                <p:column headerText="Data final" sortBy="#{venda.dt_final}">
+                    <h:outputText value="#{venda.dt_final}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+                </p:column>
+                <p:column headerText="Valor" sortBy="#{venda.vl_total}">
+                    <h:outputText value="#{venda.vl_total}"></h:outputText>
+                </p:column>
+                <p:column headerText="Descrição" sortBy="#{venda.observacao}">
+                    <h:outputText value="#{venda.observacao}"></h:outputText>
+                </p:column>
+            </p:dataTable>
+        </p:fieldset>
+    </h:form>
+
+</ui:decorate>
+
