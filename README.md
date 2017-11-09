@@ -1,0 +1,9 @@
+# VendaB
+Projeto utilizando:
+- java
+- primefaces
+- postgres
+- netbeans
+- jdbc
+- crud
+- jsf
